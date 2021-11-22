@@ -29,7 +29,7 @@
 
 <script>
 import FormularioCliente from '@/components/FormularioCliente.vue'
-import { mapActions, mapGetters } from 'vuex'
+//import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'SelecaoEmpresa',

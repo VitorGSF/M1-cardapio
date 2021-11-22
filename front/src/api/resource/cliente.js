@@ -10,9 +10,27 @@ const clienteResource = {
             })
         })
     },
+    createCliente(params) {
+        return new Promise( (resolve) => {
+            api.post('/cliente/cadastrar', params).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
+    logCliente(params) {
+        return new Promise( (resolve) => {
+            api.post('/cliente/logar', params).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
     listEmpresas() {
         return new Promise( (resolve) => {
-            api.get('/empresa/empresas', {}).then( (res) => {
+            api.get('/empresa/lista', {}).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
@@ -20,10 +38,12 @@ const clienteResource = {
         })
     },
     listProdutosEmpresa(idEmpresa){
-        api.get(`/empresa/${idEmpresa}/produtos`, {}).then( (res) => {
-            resolve(res.data)
-        }).catch( () => {
-            
+        return new Promise( (resolve) => {
+            api.get(`/empresa/${idEmpresa}/produtos`, {}).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+                
+            })
         })
     }
 }

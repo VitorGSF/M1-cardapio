@@ -34,7 +34,7 @@
                         </el-col>
                     </el-row>
                     <el-form-item>
-                        <el-button type="primary" @click="cadastrarEmpresa">
+                        <el-button type="primary" @click="enviarEmpresa">
                             Cadastrar
                         </el-button>
                         <el-button type="default" @click="redirectToLogin">
@@ -66,8 +66,19 @@ export default {
     },
     methods: {
         ...mapActions([
-            'cadastrarEmpresa'
+            'createEmpresa'
         ]),
+        enviarEmpresa() {
+            this.createEmpresa({
+                razaoSocial: this.empresa.razaoSocial,
+                cnpj: this.empresa.cnpj,
+                nomeFantasia: this.empresa.nomeFantasia,
+                telefone: this.empresa.telefone,
+                email: this.empresa.email,
+                senha: this.empresa.senha
+            })
+            //this.$router.push('/empresa')
+        },
         redirectToLogin() {
             this.$router.push('/empresa')
         }

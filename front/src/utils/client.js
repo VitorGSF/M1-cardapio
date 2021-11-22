@@ -10,6 +10,10 @@ const cliente = axios.create({
 
 cliente.interceptors.request.use( (config) => {
     const empresa = handleStore.getValue('empresa')
+    const usuario = handleStore.getValue('usuario')
+    if (usuario) {
+        config.headers['usuario-token'] = usuario.token
+    }
     if (empresa) {
         config.headers['empresa-token'] = empresa.token
     }

@@ -12,5 +12,8 @@ export default {
             let convertValue = JSON.stringify(value)
             window.localStorage.setItem(key, convertValue)
         }
+    },
+    clearStorage() {
+        window.localStorage.clear()
     }
 }

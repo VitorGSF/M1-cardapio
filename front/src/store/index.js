@@ -1,11 +1,9 @@
 import { createStore } from 'vuex'
-import Empresas from './modules/empresas.js'
-import Pedidos from './modules/pedidos.js'
+import Empresas from './cardapioApp.js'
 
 const store = createStore({
     modules: {
-        Empresas,
-        Pedidos
+        Empresas
     }
 })
 

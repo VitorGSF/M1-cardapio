@@ -10,6 +10,15 @@ const empresaResource = {
             })
         })
     },
+    logEmpresa(params) {
+        return new Promise( (resolve) => {
+            api.post('/empresa/logar', params).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
     createProduto(params) {
         return new Promise( (resolve) => {
             api.post('/produto/cadastrar', params).then( (res) => {
@@ -30,7 +39,7 @@ const empresaResource = {
     },
     changeEmpresa(idEmpresa, params) {
         return new Promise( (resolve) => {
-            api.put(`/empresa/altera-minha-empresa/${idEmpresa}`, params).then( (res) => {
+            api.put(`/empresa/altera/${idEmpresa}`, params).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
@@ -48,7 +57,7 @@ const empresaResource = {
     },
     listProdutos() {
         return new Promise( (resolve) => {
-            api.post('/produto/produtos', {}).then( (res) => {
+            api.post('/produto/lista', {}).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
@@ -57,7 +66,7 @@ const empresaResource = {
     },
     addProdutoEmpresa(idEmpresa, params) {
         return new Promise( (resolve) => {
-            api.put(`/empresa/cadastra-produto-empresa/${idEmpresa}`, params).then( (res) => {
+            api.put(`/empresa/adicionar-produto/${idEmpresa}`, params).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
