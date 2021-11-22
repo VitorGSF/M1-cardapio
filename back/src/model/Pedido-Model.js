@@ -11,9 +11,8 @@ const ClientePedidoSchema = new Schema({
     logradouro: String,
     numero: Number,
     bairro: String,
-    cidade: String,
-    estado: String,
-    complemento: String
+    complemento: String,
+    telefone: String
 })
 
 const ProdutoPedidoSchema = new Schema({
@@ -24,7 +23,8 @@ const ProdutoPedidoSchema = new Schema({
 const PedidoSchema = new Schema({
     empresa: EmpresaPedidoSchema,
     cliente: ClientePedidoSchema,
-    produto: ProdutoPedidoSchema
+    produto: ProdutoPedidoSchema,
+    status: String
 })
 
 module.exports = mongoose.model('Pedido', PedidoSchema)

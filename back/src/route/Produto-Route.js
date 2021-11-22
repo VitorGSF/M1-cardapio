@@ -2,7 +2,7 @@ const express = require('express')
 const Produto = require('../model/Produto-Model.js')
 const routerProduto = express.Router()
 
-routerProduto.post('/cadastrar', async (req, res) => {
+routerProduto.post('/cadastrar', (req, res) => {
     const produto = new Produto({
         nome: req.body.nome,
         marca: req.body.marca,
@@ -18,13 +18,14 @@ routerProduto.post('/cadastrar', async (req, res) => {
             })
         } else {
             res.status(201).send({
-                created: true
+                created: true,
+                data: produto
             })
         }
     })
 })
 
-routerProduto.get('/produtos', async (req, res) => {
+routerProduto.get('/lista', (req, res) => {
     Produto.find({}, (err, doc) => {
         if (doc) {
             res.status(200).send(doc)
@@ -40,43 +41,53 @@ routerProduto.get('/produtos', async (req, res) => {
     })
 })
 
-routerProduto.put('/alterar-produto/:id', async (req, res) => {
-    let id = req.params.id
-    
-    const produto = new Produto({
+routerProduto.put('/alterar/:id', (req, res) => {
+    const produto = {
         nome: req.body.nome,
         marca: req.body.marca,
         descricao: req.body.descricao,
         preco: req.body.preco
-    })
+    }
 
-    produto.findByIdAndUpdate(id, data, (err) => {
+    Produto.findByIdAndUpdate(req.params.id, produto, (err, doc) => {
         if (err) {
-            res.status(422).send({
-                updated: false,
-                error: 'Não foi possível alterar o produto'
+            res.status(404).send({
+                update: false,
+                status: err
             })
         } else {
-            res.status(201).send({
-                updated: true
-            })
+            if (doc) {
+                res.status(201).send({
+                    update: true,
+                    modified: doc,
+                    save: produto
+                })
+            } else {
+                res.status(401).send({
+                    update: false
+                })
+            }
         }
     })
 })
 
-routerProduto.delete('/remove-produto/:id', async (req, res) => {
-    let id = req.params.id
-
-    Produto.findByIdAndDelete(id, (err) => {
+routerProduto.delete('/remover/:id', (req, res) => {
+    Produto.findByIdAndDelete(req.params.id, (err, doc) => {
         if (err) {
             res.status(422).send({
                 deleted: false,
-                error: 'Não foi possível remover o produto'
+                error: err
             })
         } else {
-            res.status(201).send({
-                deleted: true
-            })
+            if (doc) {
+                res.status(201).send({
+                    deleted: true
+                })
+            } else {
+                res.status(401).send({
+                    deleted: false
+                })
+            }
         }
     })
 })

@@ -7,7 +7,7 @@ const routerEmpresa = express.Router()
 
 routerEmpresa.use(auth)
 
-routerEmpresa.post('/cadastrar', async (req, res) => {
+routerEmpresa.post('/cadastrar', (req, res) => {
     const empresa = new Empresa({
         razaoSocial: req.body.razaoSocial,
         cnpj: req.body.cnpj,
@@ -27,7 +27,7 @@ routerEmpresa.post('/cadastrar', async (req, res) => {
                 _id: empresa._id
             }
             const resp = jwt.sign(conversao, 'Salt&Pepper', {
-                expiresIn: '1y'
+                expiresIn: '1h'
             })
             res.status(201).send({
                 token: resp
@@ -36,12 +36,32 @@ routerEmpresa.post('/cadastrar', async (req, res) => {
     })
 })
 
-routerEmpresa.get('/minha-empresa/:id', async (req, res) => {
-    let id = req.params.id
+routerEmpresa.post('/logar', (req, res) => {
+    const empresa = {
+        email: req.body.email,
+        senha: req.body.senha
+    }
 
-    Empresa.findById(id, (err, doc) => {
+    Empresa.findOne({
+        email: empresa.email
+    }, (err, doc) => {
         if (doc) {
-            res.status(200).send(doc)
+            const resp = jwt.verify(doc.senha, 'Salt&Pepper')
+            if (resp.senha == empresa.senha) {
+                const conversao = {
+                    _id: doc._id
+                }
+                const response = jwt.sign(conversao, 'Salt&Pepper', {
+                    expiresIn: '1h'
+                })
+                res.status(201).send({
+                    token: response
+                })
+            } else {
+                res.status(404).send({
+                    auth: false
+                })
+            }
         } else if (err) {
             res.status(422).send({
                 error: 'Não foi possível retornar sua requisição'
@@ -54,7 +74,25 @@ routerEmpresa.get('/minha-empresa/:id', async (req, res) => {
     })
 })
 
-routerEmpresa.get('/empresas', async (req, res) => {
+routerEmpresa.get('/minha-empresa/:id', (req, res) => {
+    if (auth) {
+        Empresa.findById(req.params.id, (err, doc) => {
+            if (doc) {
+                res.status(200).send(doc)
+            } else if (err) {
+                res.status(422).send({
+                    error: 'Não foi possível retornar sua requisição'
+                })
+            } else {
+                res.status(404).send({
+                    error: 'Empresa não encontrada'
+                })
+            }
+        })
+    }
+})
+
+routerEmpresa.get('/empresas', (req, res) => {
     Empresa.find({}, (err, doc) => {
         if (doc) {
             res.status(200).send(doc)
@@ -70,15 +108,13 @@ routerEmpresa.get('/empresas', async (req, res) => {
     })
 })
 
-routerEmpresa.get('/:id/produtos', async (req, res) => {
+routerEmpresa.get('/:id/produtos', (req, res) => {
     Empresa.findById(req.params.id, (err, doc) => {
         if (doc) {
-            let resp = doc.map((element) => {
-                return {
-                  produtos: element.produtos
-                }
-            })
-            res.status(200).send(resp);
+            res.status(200).send({
+                produtos: doc.produtos,
+                qtdProdutos: doc.produtos.length
+            });
         } else if (err) {
             res.status(422).send({
                 error: 'Não foi possível retornar sua requisição'
@@ -91,7 +127,7 @@ routerEmpresa.get('/:id/produtos', async (req, res) => {
     })
 })
 
-routerEmpresa.put('/cadastra-produto-empresa/:id', (req, res) => {
+routerEmpresa.put('/adicionar-produto/:id', (req, res) => {
     Empresa.findById(req.params.id, (err, doc) => {
         const produto = {
             _id: req.body._id,
@@ -116,49 +152,58 @@ routerEmpresa.put('/cadastra-produto-empresa/:id', (req, res) => {
     })
 })
 
-routerEmpresa.put('/alterar-minha-empresa/:id', async (req, res) => {
-    let id = req.params.id
-    
-    const empresa = new Empresa({
+routerEmpresa.put('/alterar/:id', (req, res) => {
+    const empresa = {
         razaoSocial: req.body.razaoSocial,
         cnpj: req.body.cnpj,
         nomeFantasia: req.body.nomeFantasia,
         telefone: req.body.telefone,
         email: req.body.email,
         senha: req.body.senha
-    })
+    }
 
-    empresa.findByIdAndUpdate(id, data, (err) => {
+    Empresa.findByIdAndUpdate(req.params.id, empresa, (err, doc) => {
         if (err) {
-            res.status(422).send({
-                updated: false,
-                error: 'Não foi possível alterar a empresa'
+            res.status(404).send({
+                update: false,
+                status: err
             })
         } else {
-            res.status(201).send({
-                updated: true
+            if (doc) {
+                res.status(201).send({
+                    update: true,
+                    modified: doc,
+                    save: empresa
+                })
+            } else {
+                res.status(401).send({
+                    update: false
+                })
+            }
+        }
+        
+    })
+})
+
+routerEmpresa.delete('/remover/:id', (req, res) => {
+    Empresa.findByIdAndDelete(req.params.id, (err, doc) => {
+        if (err) {
+            res.status(422).send({
+                deleted: false,
+                error: err
             })
+        } else {
+            if (doc) {
+                res.status(201).send({
+                    deleted: true
+                })
+            } else {
+                res.status(401).send({
+                    deleted: false
+                })
+            }
         }
     })
 })
 
 module.exports = routerEmpresa
-
-/*
-routerEmpresa.delete('/remove-empresa/:id', async (req, res) => {
-    let id = req.params.id
-
-    Empresa.findByIdAndDelete(id, (err) => {
-        if (err) {
-            res.status(422).send({
-                deleted: false,
-                error: 'Não foi possível remover a empresa'
-            })
-        } else {
-            res.status(201).send({
-                deleted: true
-            })
-        }
-    })
-})
-*/
