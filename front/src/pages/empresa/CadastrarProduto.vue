@@ -20,8 +20,11 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="cadastrarProduto">
+                        <el-button type="primary" @click="enviarProduto">
                             Cadastrar Produto
+                        </el-button>
+                        <el-button type="danger" @click="enviarProduto">
+                            Voltar
                         </el-button>
                     </el-form-item>
                 </el-form>
@@ -44,8 +47,21 @@ export default {
     },
     methods: {
         ...mapActions([
-            'cadastrarProduto'
-        ])
+            'createProduto'
+        ]),
+        enviarProduto() {
+            this.createProduto({
+                nome: this.nome,
+                marca: this.marca,
+                descricao: this.descricao,
+                preco: this.preco
+            }).then( () => {
+                this.$router.go(-1)
+            })
+        },
+        back() {
+            this.$router.go(-1)
+        }
     }
 }
 </script>

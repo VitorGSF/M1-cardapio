@@ -55,7 +55,8 @@ routerEmpresa.post('/logar', (req, res) => {
                     expiresIn: '1h'
                 })
                 res.status(201).send({
-                    token: response
+                    token: response,
+                    empresa: doc
                 })
             } else {
                 res.status(404).send({
@@ -127,7 +128,7 @@ routerEmpresa.get('/:id/produtos', (req, res) => {
     })
 })
 
-routerEmpresa.put('/adicionar-produto/:id', (req, res) => {
+routerEmpresa.patch('/adicionar-produto/:id', (req, res) => {
     Empresa.findById(req.params.id, (err, doc) => {
         const produto = {
             _id: req.body._id,
@@ -136,6 +137,9 @@ routerEmpresa.put('/adicionar-produto/:id', (req, res) => {
             descricao: req.body.descricao,
             preco: req.body.preco
         }
+
+        const resp = jwt.verify(doc.senha, 'Salt&Pepper')
+        doc.senha = resp.senha
 
         doc.produtos.push(produto)
 

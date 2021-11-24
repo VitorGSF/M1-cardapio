@@ -21,17 +21,26 @@
                 </el-descriptions>
             </el-col>
         </el-row>
+        <el-button type="warning" @click="redirectToEdit">
+            Editar
+        </el-button>
+        <el-button type="danger" @click="redirectToBack">
+            Voltar
+        </el-button>
     </el-main>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     name: 'DetalhesEmpresa',
     methods: {
-        ...mapActions([
-            'detalhesEmpresa'
-        ])
+        redirectToEdit() {
+            this.$router.push('/empresa/alterar')
+        },
+        redirectToBack() {
+            this.$router.go(-1)
+        }
     },
     computed: {
         ...mapGetters([

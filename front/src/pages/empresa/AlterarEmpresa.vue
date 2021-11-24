@@ -23,9 +23,14 @@
                         <el-input type="email" v-model="getEmpresa.email" placeholder="E-mail">
                         </el-input>
                     </el-form-item>
+                    <el-input type="hidden" v-model="getEmpresa.senha">
+                    </el-input>
                     <el-form-item>
-                        <el-button type="primary">
+                        <el-button type="primary" @click="saveEmpresa(getEmpresa)">
                             Salvar
+                        </el-button>
+                        <el-button type="danger" @click="goToBack">
+                            Voltar
                         </el-button>
                     </el-form-item>
                 </el-form>
@@ -38,26 +43,25 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'AlterarEmpresa',
-    data() {
-        return {
-            razaoSocial: '',
-            cnpj: '',
-            nomeFantasia: '',
-            telefone: '',
-            email: '',
-            senha: ''
-        }
-    },
-    methods: {
-        ...mapActions([
-            'alterarEmpresa',
-            'detalhesEmpresa'
-        ])
-    },
     computed: {
         ...mapGetters([
             'getEmpresa'
         ])
+    },
+    methods: {
+        ...mapActions([
+            'updateEmpresa'
+        ]),
+        saveEmpresa(value) {
+            this.updateEmpresa({
+                value
+            }).then( () => {
+                this.$router.go(-1)
+            })
+        },
+        goToBack() {
+            this.$router.go(-1)
+        }
     }
 }
 </script>

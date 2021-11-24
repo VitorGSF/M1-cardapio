@@ -19,6 +19,15 @@ const clienteResource = {
             })
         })
     },
+    updateCliente(idCliente, params) {
+        return new Promise( (resolve) => {
+            api.post(`/cliente/alterar/${idCliente}`, params).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
     logCliente(params) {
         return new Promise( (resolve) => {
             api.post('/cliente/logar', params).then( (res) => {
@@ -28,20 +37,37 @@ const clienteResource = {
             })
         })
     },
-    listEmpresas() {
+    listCliente(idCliente) {
         return new Promise( (resolve) => {
-            api.get('/empresa/lista', {}).then( (res) => {
+            api.get(`/cliente/meu-perfil/${idCliente}`, {}).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
             })
         })
     },
-    listProdutosEmpresa(idEmpresa){
+    listEmpresas() {
         return new Promise( (resolve) => {
-            api.get(`/empresa/${idEmpresa}/produtos`, {}).then( (res) => {
+            api.get('/empresa/empresas', {}).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
+
+            })
+        })
+    },
+    listProduto(idProduto){
+        return new Promise( (resolve) => {
+            api.get(`/produto/produto/${idProduto}`, {}).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+            })
+        })
+    },
+    listPedidos(idCliente) {
+        return new Promise( (resolve) => {
+            api.get(`/pedido/lista/cliente/${idCliente}`, {}).then( res => {
+                resolve(res.data)
+            }).catch(() => {
                 
             })
         })

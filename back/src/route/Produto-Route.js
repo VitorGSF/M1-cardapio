@@ -41,6 +41,22 @@ routerProduto.get('/lista', (req, res) => {
     })
 })
 
+routerProduto.get('/produto/:id', (req, res) => {
+    Produto.findById(req.params.id, (err, doc) => {
+        if (doc) {
+            res.status(200).send(doc)
+        } else if (err) {
+            res.status(422).send({
+                error: 'Não foi possível retornar sua requisição'
+            })
+        } else {
+            res.status(404).send({
+                error: 'Produto não encontrado'
+            })
+        }
+    })
+})
+
 routerProduto.put('/alterar/:id', (req, res) => {
     const produto = {
         nome: req.body.nome,

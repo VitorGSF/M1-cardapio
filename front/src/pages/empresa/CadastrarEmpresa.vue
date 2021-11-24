@@ -76,8 +76,9 @@ export default {
                 telefone: this.empresa.telefone,
                 email: this.empresa.email,
                 senha: this.empresa.senha
+            }).then( () => {
+                this.$router.push('/empresa')
             })
-            //this.$router.push('/empresa')
         },
         redirectToLogin() {
             this.$router.push('/empresa')

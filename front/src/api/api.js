@@ -10,6 +10,9 @@ const apiClient = {
     put(url, parameters) {
         return client.put(url, parameters)
     },
+    patch(url, parameters) {
+        return client.patch(url, parameters)
+    },
     delete(url, parameters) {
         return client.delete(url, parameters)
     }

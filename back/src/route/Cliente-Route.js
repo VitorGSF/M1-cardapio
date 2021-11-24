@@ -10,7 +10,6 @@ routerCliente.use(auth)
 routerCliente.post('/cadastrar', (req, res) => {
     const cliente = new Cliente({
         nome: req.body.nome,
-        telefone: req.body.telefone,
         email: req.body.email,
         senha: req.body.senha,
         cep: req.body.cep,
@@ -19,7 +18,8 @@ routerCliente.post('/cadastrar', (req, res) => {
         bairro: req.body.bairro,
         cidade: req.body.cidade,
         estado: req.body.estado,
-        complemento: req.body.complemento
+        complemento: req.body.complemento,
+        telefone: req.body.telefone
     })
 
     cliente.save( (err) => {
@@ -29,7 +29,7 @@ routerCliente.post('/cadastrar', (req, res) => {
             })
         } else {
             const conversao = {
-                _id: empresa._id
+                _id: cliente._id
             }
             const resp = jwt.sign(conversao, 'Salt&Pepper', {
                 expiresIn: '1h'
@@ -60,7 +60,8 @@ routerCliente.post('/logar', (req, res) => {
                     expiresIn: '1h'
                 })
                 res.status(201).send({
-                    token: response
+                    token: response,
+                    cliente: doc
                 })
             } else {
                 res.status(404).send({
@@ -121,7 +122,7 @@ routerCliente.put('/alterar/:id', (req, res) => {
                 res.status(201).send({
                     update: true,
                     modified: doc,
-                    save: empresa
+                    save: cliente
                 })
             } else {
                 res.status(401).send({

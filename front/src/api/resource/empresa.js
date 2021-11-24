@@ -39,16 +39,25 @@ const empresaResource = {
     },
     changeEmpresa(idEmpresa, params) {
         return new Promise( (resolve) => {
-            api.put(`/empresa/altera/${idEmpresa}`, params).then( (res) => {
+            api.put(`/empresa/alterar/${idEmpresa}`, params).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
             })
         })
     },
+    listPedidosEmpresa(idEmpresa) {
+        return new Promise( (resolve) => {
+            api.get(`/pedido/lista/empresa/${idEmpresa}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+                
+            })
+        })
+    },
     listProdutosEmpresa(idEmpresa) {
         return new Promise( (resolve) => {
-            api.post(`/empresa/${idEmpresa}/produtos`, {}).then( (res) => {
+            api.get(`/empresa/${idEmpresa}/produtos`, {}).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
@@ -57,7 +66,7 @@ const empresaResource = {
     },
     listProdutos() {
         return new Promise( (resolve) => {
-            api.post('/produto/lista', {}).then( (res) => {
+            api.get('/produto/lista', {}).then( (res) => {
                 resolve(res.data)
             }).catch( () => {
 
@@ -66,15 +75,22 @@ const empresaResource = {
     },
     addProdutoEmpresa(idEmpresa, params) {
         return new Promise( (resolve) => {
-            api.put(`/empresa/adicionar-produto/${idEmpresa}`, params).then( (res) => {
+            api.patch(`/empresa/adicionar-produto/${idEmpresa}`, params).then( (res) => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
+    updatePedido(idPedido, params) {
+        return new Promise( (resolve) => {
+            api.patch(`/pedido/alterar/${idPedido}`, params).then( res => {
                 resolve(res.data)
             }).catch( () => {
 
             })
         })
     }
-    
-    
 }
 
 export default empresaResource
