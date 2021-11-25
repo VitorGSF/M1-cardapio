@@ -39,6 +39,9 @@
         <el-button type="warning" @click="redirectToEdit">
             Editar
         </el-button>
+        <el-button type="danger" @click="this.deleteCliente">
+            Excluir Conta
+        </el-button>
         <el-button type="danger" @click="redirectToBack">
             Voltar
         </el-button>
@@ -46,10 +49,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'PerfilCliente',
     methods: {
+        ...mapActions([
+            'deleteCliente'
+        ]),
         redirectToEdit() {
             this.$router.push('/cliente/alterar')
         },

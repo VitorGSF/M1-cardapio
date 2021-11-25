@@ -180,13 +180,32 @@ const actions = {
             commit('setPedido', res)
         })
     },
+    deleteCliente({ dispatch }, payload) {
+        ClienteResource.deletePedido(payload).then( () => {
+            dispatch('listaPedidosCliente')
+            dispatch('listaPedidosEmpresa')
+        })
+    },
+    deleteEmpresa({ dispatch, state }) {
+        EmpresaResource.deleteEmpresa(state.empresa._id).then( () => {
+            dispatch('listaEmpresas')
+        })
+    },
+    deleteProduto({ dispatch }, payload) {
+        EmpresaResource.deleteProduto(payload).then( () => {
+            dispatch('listaProdutos')
+        })
+    },
+    deleteCliente({ dispatch, state }) {
+        ClienteResource.deletePedido(state.cliente._id).then( () => {
+            dispatch('')
+        })
+    },
     pagar({ dispatch }, payload) {
         payload = {
             payload,
             transactionAmount: state.pedido.quantidade * state.pedido.produto.preco
         }
-        
-        console.log(payload)
 
         ClienteResource.pagamento(payload).then( res => {
             console.log(res)

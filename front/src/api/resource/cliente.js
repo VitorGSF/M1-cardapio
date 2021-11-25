@@ -81,6 +81,24 @@ const clienteResource = {
             })
         })
     },
+    deletePedido(idPedido) {
+        return new Promise( (resolve) => {
+            api.delete(`/pedido/remover/${idPedido}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
+    deleteCliente(idCliente) {
+        return new Promise( (resolve) => {
+            api.delete(`/cliente/remover/${idCliente}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+                
+            })
+        })
+    },
     pagamento(params) {
         return new Promise( (resolve) => {
             api.post('/pagamento/pagar', params).then( res => {

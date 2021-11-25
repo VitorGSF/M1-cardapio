@@ -109,4 +109,25 @@ routerPedido.patch('/alterar/:id', (req, res) => {
     })
 })
 
+routerPedido.delete('/remover/:id', (req, res) => {
+    Pedido.findByIdAndDelete(req.params.id, (err, doc) => {
+        if (err) {
+            res.status(422).send({
+                deleted: false,
+                error: err
+            })
+        } else {
+            if (doc) {
+                res.status(201).send({
+                    deleted: true
+                })
+            } else {
+                res.status(401).send({
+                    deleted: false
+                })
+            }
+        }
+    })
+})
+
 module.exports = routerPedido

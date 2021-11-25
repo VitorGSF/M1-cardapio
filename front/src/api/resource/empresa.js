@@ -90,6 +90,24 @@ const empresaResource = {
 
             })
         })
+    },
+    deleteEmpresa(idEmpresa) {
+        return new Promise( (resolve) => {
+            api.delete(`/empresa/remover/${idEmpresa}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
+    },
+    deleteProduto(idProduto) {
+        return new Promise( (resolve) => {
+            api.delete(`/produto/remover/${idProduto}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
     }
 }
 
