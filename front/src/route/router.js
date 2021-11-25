@@ -66,6 +66,10 @@ const route = [
         component: () => import('../pages/cliente/Pedido.vue')
     },
     {
+        path: '/cliente/pagamento',
+        component: () => import('../pages/cliente/Pagamento.vue')
+    },
+    {
         path: '/cliente/pedidos',
         component: () => import('../pages/cliente/ListaPedidos.vue')
     },

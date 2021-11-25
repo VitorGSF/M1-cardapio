@@ -11,6 +11,10 @@
                     Nome do Cliente: {{item.cliente.nome}}
                     <br>
                     Status: {{item.status}}
+                    <br>
+                    <el-button type="success" @click="listaParaPagar(item._id)">
+                        Realizar Pagamento
+                    </el-button>
                 </el-card>
         </el-row>
         <el-button type="danger" @click="back">
@@ -28,8 +32,14 @@ export default {
     },
     methods: {
         ...mapActions([
-            'listaPedidosCliente'
+            'listaPedidosCliente',
+            'listaPedido'
         ]),
+        listaParaPagar(id) {
+            this.listaPedido(id).then( () => {
+                this.$router.push('/cliente/pagamento')
+            })
+        },
         listagemPedidos() {
             this.listaPedidosCliente()
         },

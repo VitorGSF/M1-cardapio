@@ -7,6 +7,7 @@ const EmpresaRoute = require('./route/Empresa-Route.js')
 const ProdutoRoute = require('./route/Produto-Route.js')
 const PedidoRoute = require('./route/Pedido-Route.js')
 const ClienteRoute = require('./route/Cliente-Route.js')
+const Pagamento = require('./controller/mercadoPago.js')
 
 mongoose.connect('mongodb+srv://userAuth:8paHwKRP5Wyjg4Kw@cluster0.nby4r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -31,6 +32,7 @@ app.use('/empresa', EmpresaRoute)
 app.use('/produto', ProdutoRoute)
 app.use('/pedido', PedidoRoute)
 app.use('/cliente', ClienteRoute)
+app.use('/pagamento', Pagamento)
 
 app.listen(3000, () => {
     console.log('APP listening at http://localhost:3000')

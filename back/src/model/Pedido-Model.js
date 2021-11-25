@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -17,13 +18,14 @@ const ClientePedidoSchema = new Schema({
 
 const ProdutoPedidoSchema = new Schema({
     nome: String,
-    quantidade: Number
+    preco: Number
 })
 
 const PedidoSchema = new Schema({
     empresa: EmpresaPedidoSchema,
     cliente: ClientePedidoSchema,
     produto: ProdutoPedidoSchema,
+    quantidade: Number,
     status: String
 })
 

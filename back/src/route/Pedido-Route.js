@@ -21,7 +21,8 @@ routerPedido.post('/cadastrar', (req, res) => {
         },
         produto: {
             _id: req.body.produto._id,
-            nome: req.body.produto.nome
+            nome: req.body.produto.nome,
+            preco: req.body.produto.preco
         },
         quantidade: req.body.quantidade,
         status: req.body.status
@@ -41,6 +42,22 @@ routerPedido.post('/cadastrar', (req, res) => {
     })
 })
 
+routerPedido.get('/:id', (req, res) => {
+    Pedido.findById(req.params.id, (err, doc) => {
+        if (doc) {
+            res.status(200).send(doc)
+        } else if (err) {
+            res.status(422).send({
+                error: 'Não foi possível retornar sua requisição'
+            })
+        } else {
+            res.status(404).send({
+                error: 'Pedido não encontrado'
+            })
+        }
+    })
+})
+
 routerPedido.get('/lista/empresa/:id', (req, res) => {
     Pedido.find({'empresa._id': req.params.id}, (err, doc) => {
         if (doc) {
@@ -51,7 +68,7 @@ routerPedido.get('/lista/empresa/:id', (req, res) => {
             })
         } else {
             res.status(404).send({
-                error: 'Empresa não encontrada'
+                error: 'Pedido não encontrado'
             })
         }
     })
@@ -67,7 +84,7 @@ routerPedido.get('/lista/cliente/:id', (req, res) => {
             })
         } else {
             res.status(404).send({
-                error: 'Cliente não encontrado'
+                error: 'Pedido não encontrado'
             })
         }
     })

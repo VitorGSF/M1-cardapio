@@ -68,6 +68,7 @@ const actions = {
         })
     },
     createPedido({ state, dispatch }, payload) {
+        console.log(state.produto)
         ClienteResource.createPedido({
             empresa: {
                 _id: state.empresaSelecionada._id,
@@ -75,7 +76,8 @@ const actions = {
             },
             produto: {
                 _id: state.produto._id,
-                nome: state.produto.nome
+                nome: state.produto.nome,
+                preco: state.produto.preco
             },
             cliente: {
                 _id: state.cliente._id,
@@ -119,7 +121,6 @@ const actions = {
         })
     },
     updatePedido({ dispatch }, payload) {
-        console.log(payload)
         EmpresaResource.updatePedido(payload.id, {status: payload.value}).then(() => {
             dispatch('listaPedidosEmpresa')
         })
@@ -172,6 +173,24 @@ const actions = {
     listaPedidosCliente({ state, commit }) {
         ClienteResource.listPedidos(state.cliente._id).then( res => {
             commit('setPedidos', res)
+        })
+    },
+    listaPedido({ commit }, payload) {
+        ClienteResource.listPedido(payload).then( res => {
+            commit('setPedido', res)
+        })
+    },
+    pagar({ dispatch }, payload) {
+        payload = {
+            payload,
+            transactionAmount: state.pedido.quantidade * state.pedido.produto.preco
+        }
+        
+        console.log(payload)
+
+        ClienteResource.pagamento(payload).then( res => {
+            console.log(res)
+            dispatch('')
         })
     },
     encerrarSessao({ commit }) {

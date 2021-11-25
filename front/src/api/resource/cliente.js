@@ -68,7 +68,25 @@ const clienteResource = {
             api.get(`/pedido/lista/cliente/${idCliente}`, {}).then( res => {
                 resolve(res.data)
             }).catch(() => {
+
+            })
+        })
+    },
+    listPedido(idPedido) {
+        return new Promise( (resolve) => {
+            api.get(`/pedido/${idPedido}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
                 
+            })
+        })
+    },
+    pagamento(params) {
+        return new Promise( (resolve) => {
+            api.post('/pagamento/pagar', params).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+
             })
         })
     }
