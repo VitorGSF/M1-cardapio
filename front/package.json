@@ -5,12 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node ./src/server.js"
   },
   "dependencies": {
     "axios": "^0.22.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.1.0-beta.24",
+    "express": "^4.17.1",
     "mercadopago": "^1.5.9",
     "sass": "^1.42.1",
     "sass-loader": "^10.2.0",
