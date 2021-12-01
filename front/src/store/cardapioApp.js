@@ -180,7 +180,7 @@ const actions = {
             commit('setPedido', res)
         })
     },
-    deleteCliente({ dispatch }, payload) {
+    deletePedido({ dispatch }, payload) {
         ClienteResource.deletePedido(payload).then( () => {
             dispatch('listaPedidosCliente')
             dispatch('listaPedidosEmpresa')
@@ -192,12 +192,15 @@ const actions = {
         })
     },
     deleteProduto({ dispatch }, payload) {
-        EmpresaResource.deleteProduto(payload).then( () => {
+        EmpresaResource.deleteProdutoEmpresa(state.empresa._id, payload).then( () => {
             dispatch('listaProdutos')
+        })
+        EmpresaResource.deleteProduto(payload).then( () => {
+            dispatch('')
         })
     },
     deleteCliente({ dispatch, state }) {
-        ClienteResource.deletePedido(state.cliente._id).then( () => {
+        ClienteResource.deleteCliente(state.cliente._id).then( () => {
             dispatch('')
         })
     },

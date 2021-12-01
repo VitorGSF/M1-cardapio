@@ -10,11 +10,12 @@
   "dependencies": {
     "axios": "^0.22.0",
     "core-js": "^3.6.5",
-    "element-plus": "^1.1.0-beta.19",
+    "element-plus": "^1.1.0-beta.24",
+    "mercadopago": "^1.5.9",
     "sass": "^1.42.1",
     "sass-loader": "^10.2.0",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.11",
+    "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

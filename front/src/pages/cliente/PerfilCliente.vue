@@ -2,7 +2,7 @@
     <el-main>
         <el-row>
             <el-col :span="12" :offset="6">
-                <el-descriptions title="Detalhes da Empresa" direction="vertical" :column="1" border>
+                <el-descriptions title="Detalhes do Cliente" direction="vertical" :column="1" border>
                     <el-descriptions-item label="Nome">
                         {{ getCliente.nome }}
                     </el-descriptions-item>
@@ -39,7 +39,7 @@
         <el-button type="warning" @click="redirectToEdit">
             Editar
         </el-button>
-        <el-button type="danger" @click="this.deleteCliente">
+        <el-button type="danger" @click="deletar">
             Excluir Conta
         </el-button>
         <el-button type="danger" @click="redirectToBack">
@@ -56,6 +56,11 @@ export default {
         ...mapActions([
             'deleteCliente'
         ]),
+        deletar() {
+            this.deleteCliente().then( () => {
+                this.$router.push('/')
+            })
+        },
         redirectToEdit() {
             this.$router.push('/cliente/alterar')
         },

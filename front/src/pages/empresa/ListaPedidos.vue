@@ -8,6 +8,10 @@
                     <br>
                     Preço: {{item.produto.preco}}
                     <br>
+                    Quantidade: {{item.quantidade}}
+                    <br>
+                    Total: {{item.produto.preco * item.quantidade}}
+                    <br>
                     Nome do Cliente: {{item.cliente.nome}}
                     <br>
                     Status:

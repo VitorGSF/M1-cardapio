@@ -64,28 +64,22 @@ export default {
         ...mapActions([
             'pagar'
         ]),
-        token() {
-            
-        },
         realizarPagamento() {
-
-            this.pagar({
-                cardholderName: this.cardholderName,
-                cardholderEmail: this.cardholderEmail,
-                cardNumber: this.cardNumber,
-                cardExpirationMonth: this.cardExpirationMonth,
-                cardExpirationYear: this.cardExpirationYear,
-                securityCode: this.securityCode,
-                installments: this.installments,
-                identificationType: this.identificationType,
-                identificationNumber: this.identificationNumber,
-                issuer: this.issuer,
-                email: this.cardholderEmail,
-                description: 'Pagamento de pedido',
-                docType: this.identificationType,
-                docNumber: this.identificationNumber,
-                token: 'TEST-061e219c-413a-41a5-b239-07ec5d4b6a8a'
-            })
+            
+                this.pagar({
+                    installments: this.installments,
+                    identificationType: this.identificationType,
+                    identificationNumber: this.identificationNumber,
+                    issuer: this.issuer,
+                    email: this.cardholderEmail,
+                    description: 'Pagamento de pedido',
+                    docType: this.identificationType,
+                    docNumber: this.identificationNumber,
+                    token: 1025612
+                }).then( res => {
+                    console.log('a', res)
+                    this.$router.go(-1)
+                })
         },
         back() {
             this.$router.go(-1)
@@ -93,3 +87,19 @@ export default {
     }
 }
 </script>
+
+/*
+const MercadoPago = require('mercadopago')
+            const mp = new MercadoPago('TEST-061e219c-413a-41a5-b239-07ec5d4b6a8a')
+
+            mp.createCardToken({
+                cardNumber: this.cardNumber,
+                cardholderName: this.cardholderName,
+                cardExpirationMonth: this.cardExpirationMonth,
+                cardExpirationYear: this.cardExpirationYear,
+                securityCode: this.securityCode,
+                identificationType: this.identificationType,
+                identificationNumber: this.identificationNumber
+            }).then((response) => { 
+                response.id
+*/

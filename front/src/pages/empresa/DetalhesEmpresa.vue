@@ -24,6 +24,9 @@
         <el-button type="warning" @click="redirectToEdit">
             Editar
         </el-button>
+        <el-button type="danger" @click="deletar">
+            Excluir Conta
+        </el-button>
         <el-button type="danger" @click="redirectToBack">
             Voltar
         </el-button>
@@ -31,10 +34,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'DetalhesEmpresa',
     methods: {
+        ...mapActions([
+            'deleteEmpresa' 
+        ]),
+        deletar() {
+            this.deleteEmpresa().then( () => {
+                this.$router.push('/')
+            })
+        },
         redirectToEdit() {
             this.$router.push('/empresa/alterar')
         },

@@ -8,12 +8,20 @@
                     <br>
                     Preço: {{item.produto.preco}}
                     <br>
+                    Quantidade: {{item.quantidade}}
+                    <br>
+                    Total: {{item.produto.preco * item.quantidade}}
+                    <br>
                     Nome do Cliente: {{item.cliente.nome}}
                     <br>
                     Status: {{item.status}}
                     <br>
                     <el-button type="success" @click="listaParaPagar(item._id)">
                         Realizar Pagamento
+                    </el-button>
+                    <br>
+                    <el-button type="danger" @click="deletar(item._id)">
+                        Excluir
                     </el-button>
                 </el-card>
         </el-row>
@@ -33,8 +41,14 @@ export default {
     methods: {
         ...mapActions([
             'listaPedidosCliente',
-            'listaPedido'
+            'listaPedido',
+            'deletePedido'
         ]),
+        deletar(id) {
+            this.deletePedido(id).then( () => {
+                this.$router.push('/cliente/pedidos')
+            })
+        },
         listaParaPagar(id) {
             this.listaPedido(id).then( () => {
                 this.$router.push('/cliente/pagamento')

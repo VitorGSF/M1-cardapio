@@ -108,6 +108,15 @@ const empresaResource = {
 
             })
         })
+    },
+    deleteProdutoEmpresa(idEmpresa, idProduto) {
+        return new Promise( (resolve) => {
+            api.delete(`/empresa/remover-produto/${idEmpresa}/${idProduto}`, {}).then( res => {
+                resolve(res.data)
+            }).catch( () => {
+
+            })
+        })
     }
 }
 

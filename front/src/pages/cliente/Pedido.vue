@@ -1,4 +1,5 @@
 <template>
+<el-main>
     <el-row :column="3" :gutter="24" :offset="6">
         <el-col :span="6" >
             <el-card v-for="empresa in getEmpresas" :key="empresa._id" @click="this.selecionaEmpresa(empresa._id)">
@@ -27,6 +28,10 @@
             </el-card>
         </el-col>
     </el-row>
+    <el-button type="danger" @click="back">
+        Voltar
+    </el-button>
+</el-main>
 </template>
 
 <script>
@@ -67,6 +72,9 @@ export default {
             }).then( () => {
                 this.$router.go(-1)
             })
+        },
+        back() {
+            this.$router.go(-1)
         }
     }
 }

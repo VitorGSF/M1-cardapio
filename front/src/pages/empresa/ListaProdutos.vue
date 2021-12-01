@@ -7,6 +7,10 @@
                     Marca: {{item.marca}}
                     <br>
                     Preço: {{item.preco}}
+                    <br>
+                    <el-button type="danger" @click="deletar(item._id)">
+                        Excluir
+                    </el-button>
                 </el-card>
         </el-row>
         <el-button type="danger" @click="back">
@@ -24,8 +28,14 @@ export default {
     },
     methods: {
         ...mapActions([
-            'listaProdutosEmpresa'
+            'listaProdutosEmpresa',
+            'deleteProduto'
         ]),
+        deletar(id) {
+            this.deleteProduto(id).then( () => {
+                this.$router.push('/empresa/lista/produto')
+            })
+        },
         listagemProdutos() {
             this.listaProdutosEmpresa()
         },
