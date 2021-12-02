@@ -17,13 +17,13 @@
                 <el-input type="email" v-model="cardholderEmail" placeholder="E-mail" required></el-input>
             </el-form-item>
             <el-form-item label="Código de Segurança">
-                <el-input v-model="securityCode" placeholder="Código de Segurança" required></el-input>
+                <el-input type="number" v-model="securityCode" placeholder="Código de Segurança" required></el-input>
             </el-form-item>
             <el-form-item label="Parcelas">
                 <el-input type="number" v-model="installments" placeholder="Parcelas" min="1" max="12" required></el-input>
             </el-form-item>
             <el-form-item label="Banco">
-                <el-input v-model="issuer" placeholder="Banco" required></el-input>
+                <el-input type="number" v-model="issuer" placeholder="Banco" required></el-input>
             </el-form-item>
             <el-form-item label="Tipo de Documento">
                 <el-input v-model="identificationType" placeholder="Tipo de Documento" required></el-input>
@@ -65,31 +65,6 @@ export default {
             'pagar'
         ]),
         realizarPagamento() {
-            
-                this.pagar({
-                    installments: this.installments,
-                    identificationType: this.identificationType,
-                    identificationNumber: this.identificationNumber,
-                    issuer: this.issuer,
-                    email: this.cardholderEmail,
-                    description: 'Pagamento de pedido',
-                    docType: this.identificationType,
-                    docNumber: this.identificationNumber,
-                    token: 1025612
-                }).then( res => {
-                    console.log('a', res)
-                    this.$router.go(-1)
-                })
-        },
-        back() {
-            this.$router.go(-1)
-        }
-    }
-}
-</script>
-
-/*
-const MercadoPago = require('mercadopago')
             const mp = new MercadoPago('TEST-061e219c-413a-41a5-b239-07ec5d4b6a8a')
 
             mp.createCardToken({
@@ -101,5 +76,23 @@ const MercadoPago = require('mercadopago')
                 identificationType: this.identificationType,
                 identificationNumber: this.identificationNumber
             }).then((response) => { 
-                response.id
-*/
+                this.pagar({
+                    installments: this.installments,
+                    identificationType: this.identificationType,
+                    identificationNumber: this.identificationNumber,
+                    issuer: this.issuer,
+                    email: this.cardholderEmail,
+                    docType: this.identificationType,
+                    docNumber: this.identificationNumber,
+                    token: response.id
+                }).then( () => {
+                    this.$router.go(-1)
+                })
+            })
+        },
+        back() {
+            this.$router.go(-1)
+        }
+    }
+}
+</script>

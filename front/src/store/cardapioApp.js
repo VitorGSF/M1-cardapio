@@ -121,6 +121,7 @@ const actions = {
         })
     },
     updatePedido({ dispatch }, payload) {
+        console.log(payload)
         EmpresaResource.updatePedido(payload.id, {status: payload.value}).then(() => {
             dispatch('listaPedidosEmpresa')
         })
@@ -204,7 +205,7 @@ const actions = {
             dispatch('')
         })
     },
-    pagar({ dispatch }, payload) {
+    pagar({ dispatch, state }, payload) {
         payload = {
             payload,
             transactionAmount: state.pedido.quantidade * state.pedido.produto.preco
@@ -212,7 +213,10 @@ const actions = {
 
         ClienteResource.pagamento(payload).then( res => {
             console.log(res)
-            dispatch('')
+            dispatch('updatePedido', {
+                id: state.pedido._id,
+                value: 'Pagamento Realizado'
+            })
         })
     },
     encerrarSessao({ commit }) {
